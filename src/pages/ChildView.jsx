@@ -57,14 +57,7 @@ export function ChildView({
           {tasks.length === 0 && (
             <div className="empty-state">
               <div className="empty-state-icon">
-                <div 
-                  style={{
-                    width: 32,
-                    height: 32,
-                    background: 'var(--color-accent-blue)',
-                    borderRadius: '50%',
-                  }}
-                />
+                <div className="empty-state-icon-placeholder" />
               </div>
               <p>Задач пока нет</p>
             </div>
@@ -75,7 +68,7 @@ export function ChildView({
       {activeTab === 'balance' && (
         <div className="card">
           <h2 className="app-subtitle">История баланса</h2>
-          <p style={{ color: 'var(--text-secondary)', textAlign: 'center' }}>
+          <p className="card-text-center">
             Здесь будет история пополнений и трат
           </p>
         </div>
@@ -84,7 +77,7 @@ export function ChildView({
       {activeTab === 'shop' && (
         <div className="card">
           <h2 className="app-subtitle">Магазин наград</h2>
-          <p style={{ color: 'var(--text-secondary)', textAlign: 'center' }}>
+          <p className="card-text-center">
             Здесь можно потратить заработанные деньги
           </p>
         </div>

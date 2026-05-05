@@ -20,19 +20,19 @@ function TaskContent({ task }) {
       <div className="task-info">
         <h3 className="task-title">{task.title}</h3>
         {task.description && (
-          <p className="task-description" style={{ fontSize: '13px', color: 'var(--text-secondary)', marginTop: '4px' }}>
+          <p className="task-description">
             {task.description}
           </p>
         )}
         <p className="task-reward">Награда: {task.reward} ₽</p>
         <span className="task-status">{statusConfig.label}</span>
         {task.comment && (
-          <p className="task-comment" style={{ fontSize: '12px', color: 'var(--color-accent-red)', marginTop: '4px' }}>
+          <p className="task-comment">
             Комментарий: {task.comment}
           </p>
         )}
         {task.status === 'approved' && (
-          <p className="task-completed-text" style={{ fontSize: '12px', color: 'var(--color-accent-green)', marginTop: '4px' }}>
+          <p className="task-completed-status">
             ✓ Завершено
           </p>
         )}
@@ -48,9 +48,8 @@ function TaskActions({ actions }) {
   if (!actions || actions.length === 0) {
     return (
       <button 
-        className="btn btn-secondary" 
+        className="btn btn-secondary btn-disabled" 
         disabled
-        style={{ opacity: 0.5 }}
       >
         Нет действий
       </button>
