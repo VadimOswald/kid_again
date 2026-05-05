@@ -31,6 +31,11 @@ function TaskContent({ task }) {
             Комментарий: {task.comment}
           </p>
         )}
+        {task.status === 'approved' && (
+          <p className="task-completed-text" style={{ fontSize: '12px', color: 'var(--color-accent-green)', marginTop: '4px' }}>
+            ✓ Завершено
+          </p>
+        )}
       </div>
     </div>
   );
@@ -71,8 +76,18 @@ function TaskActions({ actions }) {
  * Карточка задачи с цветной фигурой-индикатором статуса
  */
 export function TaskItem({ task, actions }) {
+  // Маппинг статусов в CSS классы
+  const statusClassMap = {
+    new: '',
+    pending: 'task-item--pending',
+    rejected: 'task-item--rejected',
+    approved: 'task-item--approved',
+  };
+
+  const statusClass = statusClassMap[task.status] || '';
+
   return (
-    <li className="task-item">
+    <li className={`task-item ${statusClass}`}>
       <TaskContent task={task} />
       <TaskActions actions={actions} />
     </li>

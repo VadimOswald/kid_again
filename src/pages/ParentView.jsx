@@ -2,6 +2,7 @@ import { useState } from 'react';
 import BalanceDisplay from '../components/ui/BalanceDisplay';
 import BottomNav from '../components/ui/BottomNav';
 import TaskList from '../components/TaskList';
+import Section from '../components/Section';
 
 /**
  * Экран родителя
@@ -14,6 +15,13 @@ export function ParentView({
   balance = 0,
 }) {
   const [activeTab, setActiveTab] = useState('dashboard');
+
+  // Группировка задач для родителя: На проверке → Активные → Выполнено
+  const groupedTasks = {
+    pending: tasks.filter(t => t.status === 'pending'),
+    active: tasks.filter(t => t.status === 'new' || t.status === 'rejected'),
+    done: tasks.filter(t => t.status === 'approved'),
+  };
 
   return (
     <div className="app-container">
@@ -43,7 +51,41 @@ export function ParentView({
             </button>
           </div>
           
-          <TaskList tasks={tasks} getActions={getActions} />
+          {/* Секции с задачами */}
+          {groupedTasks.pending.length > 0 && (
+            <Section title="На проверке">
+              <TaskList tasks={groupedTasks.pending} getActions={getActions} />
+            </Section>
+          )}
+          
+          {groupedTasks.active.length > 0 && (
+            <Section title="Активные задачи">
+              <TaskList tasks={groupedTasks.active} getActions={getActions} />
+            </Section>
+          )}
+          
+          {groupedTasks.done.length > 0 && (
+            <Section title="Выполнено">
+              <TaskList tasks={groupedTasks.done} getActions={getActions} />
+            </Section>
+          )}
+          
+          {/* Если вообще нет задач */}
+          {tasks.length === 0 && (
+            <div className="empty-state">
+              <div className="empty-state-icon">
+                <div 
+                  style={{
+                    width: 32,
+                    height: 32,
+                    background: 'var(--color-accent-blue)',
+                    borderRadius: '50%',
+                  }}
+                />
+              </div>
+              <p>Задач пока нет</p>
+            </div>
+          )}
         </div>
       )}
 
