@@ -1,43 +1,17 @@
 ```
+# Build artifacts
+dist/
+build/
+*.css
+*.js
+*.html
+
 # Dependencies
 node_modules/
 
-# Build artifacts
-dist/
-node_modules/.vite/
-
-# Compiled/Generated files in node_modules
-*.node
-*.cjs
-*.d.cts
-*.d.ts
-*.map
-
-# Package lock files
-package-lock.json
-node_modules/.package-lock.json
-
-# IDE/Editor files
+# Editors
 .vscode/
-.idea/
-*.swp
-*.swo
-*.tmp
 
 # Logs
 *.log
-
-# Environment files
-.env
-.env.local
-*.env.*
-
-# Coverage reports
-coverage/
-htmlcov/
-.coverage
-
-# OS generated files
-.DS_Store
-Thumbs.db
 ```
