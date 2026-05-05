@@ -182,9 +182,10 @@ export function useTaskManager(initialTasks = [], initialBalance = 0) {
    * @param {object} task - Task object
    * @param {'parent' | 'child'} role - User role
    * @param {function} onEditClick - Callback to open edit modal (for parent)
+   * @param {function} onRejectClick - Callback to open reject modal (for parent)
    * @returns {Array<{ label: string, type: 'primary' | 'secondary' | 'danger', onClick: function }>}
    */
-  const getAvailableActions = useCallback((task, role, onEditClick = null) => {
+  const getAvailableActions = useCallback((task, role, onEditClick = null, onRejectClick = null) => {
     const actions = [];
 
     if (role === 'child') {
@@ -207,7 +208,7 @@ export function useTaskManager(initialTasks = [], initialBalance = 0) {
         actions.push({
           label: 'На доработку',
           type: 'secondary',
-          onClick: () => rejectTask(task.id, ''),
+          onClick: () => onRejectClick && onRejectClick(task),
         });
       }
 
@@ -231,7 +232,7 @@ export function useTaskManager(initialTasks = [], initialBalance = 0) {
     }
 
     return actions;
-  }, [completeTask, approveTask, rejectTask, deleteTask]);
+  }, [completeTask, approveTask, deleteTask]);
 
   return {
     // State
