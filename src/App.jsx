@@ -2,6 +2,7 @@ import { useState } from "react";
 import ParentView from "./pages/ParentView";
 import ChildView from "./pages/ChildView";
 import CreateTaskModal from "./components/CreateTaskModal";
+import RejectTaskModal from "./components/RejectTaskModal";
 import { useTaskManager } from "./hooks/useTaskManager";
 import './App.css';
 
@@ -39,6 +40,9 @@ function App() {
   // Modal state for creating/editing tasks
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState(null);
+  
+  // Modal state for rejecting task
+  const [rejectingTask, setRejectingTask] = useState(null);
 
   // Wrapper for addTask to match modal interface
   function handleCreateTask({ title, description, reward }) {
@@ -55,6 +59,11 @@ function App() {
   function openEditModal(task) {
     setEditingTask(task);
     setIsModalOpen(true);
+  }
+
+  // Open reject modal
+  function openRejectModal(task) {
+    setRejectingTask(task);
   }
 
   return (
@@ -80,7 +89,7 @@ function App() {
           tasks={tasks}
           onAddTask={() => setIsModalOpen(true)}
           onEditTask={openEditModal}
-          getActions={(task) => getAvailableActions(task, 'parent', openEditModal)}
+          getActions={(task) => getAvailableActions(task, 'parent', openEditModal, openRejectModal)}
           balance={balance}
         />
       )}
@@ -105,6 +114,17 @@ function App() {
         taskId={editingTask?.id}
         onCreate={handleCreateTask}
         onSave={handleEditTask}
+      />
+
+      {/* Модальное окно отправки на доработку */}
+      <RejectTaskModal
+        isOpen={!!rejectingTask}
+        taskTitle={rejectingTask?.title}
+        onClose={() => setRejectingTask(null)}
+        onSubmit={(comment) => {
+          rejectTask(rejectingTask.id, comment);
+          setRejectingTask(null);
+        }}
       />
     </>
   );
