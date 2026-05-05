@@ -35,7 +35,7 @@ export function ParentView({
         <div>
           <h2 className="app-subtitle">Обзор семьи</h2>
           <div className="card">
-            <p style={{ color: 'var(--text-secondary)', textAlign: 'center' }}>
+            <p className="card-text-center">
               Добро пожаловать! Здесь будет статистика и активность детей.
             </p>
           </div>
@@ -44,8 +44,8 @@ export function ParentView({
 
       {activeTab === 'tasks' && (
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-            <h2 className="app-subtitle" style={{ margin: 0 }}>Задачи детей</h2>
+          <div className="flex-between-center">
+            <h2 className="app-subtitle app-subtitle-no-margin">Задачи детей</h2>
             <button className="btn btn-primary" onClick={onAddTask}>
               + Добавить
             </button>
@@ -74,14 +74,7 @@ export function ParentView({
           {tasks.length === 0 && (
             <div className="empty-state">
               <div className="empty-state-icon">
-                <div 
-                  style={{
-                    width: 32,
-                    height: 32,
-                    background: 'var(--color-accent-blue)',
-                    borderRadius: '50%',
-                  }}
-                />
+                <div className="empty-state-icon-placeholder" />
               </div>
               <p>Задач пока нет</p>
             </div>
@@ -92,7 +85,7 @@ export function ParentView({
       {activeTab === 'rewards' && (
         <div className="card">
           <h2 className="app-subtitle">Магазин наград</h2>
-          <p style={{ color: 'var(--text-secondary)', textAlign: 'center' }}>
+          <p className="card-text-center">
             Здесь можно добавить награды для детей
           </p>
         </div>
@@ -101,7 +94,7 @@ export function ParentView({
       {activeTab === 'family' && (
         <div className="card">
           <h2 className="app-subtitle">Управление семьей</h2>
-          <p style={{ color: 'var(--text-secondary)', textAlign: 'center' }}>
+          <p className="card-text-center">
             Здесь будет управление участниками семьи
           </p>
         </div>

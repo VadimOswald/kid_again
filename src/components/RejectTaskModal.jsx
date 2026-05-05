@@ -70,11 +70,11 @@ export function RejectTaskModal({
       <div className="modal-content">
         <h2 className="modal-title">Доработка задания</h2>
         
-        <p className="modal-text" style={{ marginBottom: '12px', fontSize: '14px', color: 'var(--text-secondary)' }}>
+        <p className="modal-text-secondary">
           Укажите, что нужно исправить в задании:
         </p>
         {taskTitle && (
-          <p className="task-title-preview" style={{ marginBottom: '16px', fontWeight: '500', color: 'var(--text-primary)' }}>
+          <p className="task-title-preview">
             «{taskTitle}»
           </p>
         )}

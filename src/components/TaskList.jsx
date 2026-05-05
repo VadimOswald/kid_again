@@ -8,14 +8,7 @@ export function TaskList({ tasks, getActions }) {
     return (
       <div className="empty-state">
         <div className="empty-state-icon">
-          <div 
-            style={{
-              width: 32,
-              height: 32,
-              background: 'var(--color-accent-blue)',
-              borderRadius: '50%',
-            }}
-          />
+          <div className="empty-state-icon-placeholder" />
         </div>
         <p>Задач пока нет</p>
       </div>

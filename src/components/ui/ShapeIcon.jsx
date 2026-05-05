@@ -5,12 +5,12 @@
 
 export function ShapeCircle({ size = 24, color = 'var(--color-accent-green)' }) {
   return (
-    <div 
-      className="shape-circle"
-      style={{ 
-        width: size, 
-        height: size, 
-        background: color 
+    <div
+      className="shape-circle shape-icon-base"
+      style={{
+        width: size,
+        height: size,
+        background: color
       }}
     />
   );
@@ -18,12 +18,12 @@ export function ShapeCircle({ size = 24, color = 'var(--color-accent-green)' }) 
 
 export function ShapeSquare({ size = 22, color = 'var(--color-accent-yellow)' }) {
   return (
-    <div 
-      className="shape-square"
-      style={{ 
-        width: size, 
-        height: size, 
-        background: color 
+    <div
+      className="shape-square shape-icon-base"
+      style={{
+        width: size,
+        height: size,
+        background: color
       }}
     />
   );
@@ -32,13 +32,11 @@ export function ShapeSquare({ size = 22, color = 'var(--color-accent-yellow)' })
 export function ShapeTriangle({ size = 20, color = 'var(--color-accent-orange)' }) {
   const halfSize = size * 0.6;
   const fullSize = size;
-  
+
   return (
-    <div 
+    <div
       className="shape-triangle"
       style={{
-        width: 0,
-        height: 0,
         borderLeft: `${halfSize}px solid transparent`,
         borderRight: `${halfSize}px solid transparent`,
         borderBottom: `${fullSize}px solid ${color}`,
@@ -49,8 +47,8 @@ export function ShapeTriangle({ size = 20, color = 'var(--color-accent-orange)' 
 
 export function ShapeDiamond({ size = 20, color = 'var(--color-accent-blue)' }) {
   return (
-    <div 
-      className="shape-diamond"
+    <div
+      className="shape-diamond shape-icon-base"
       style={{
         width: size,
         height: size,
