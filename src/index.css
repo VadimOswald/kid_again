@@ -1,21 +1,27 @@
 :root {
-  /* Палитра Family Earn */
-  --color-bg-primary: #F7FFF1;        /* Светлый фон */
-  --color-accent-yellow: #F5DE49;     /* Акцент желтый */
-  --color-accent-green: #539987;      /* Акцент зеленый */
-  --color-accent-orange: #DE6B48;     /* Акцент оранжевый */
-  --color-accent-blue: #2660A4;       /* Акцент синий */
-  --color-accent-red: #DE4848;        /* Акцент красный */
+  /* Google Font */
+  font-family: 'Golos Text', sans-serif;
+  
+  /* Цветовая система Family Earn */
+  --bg-primary: #F8F6FF;
+  
+  --color-success: #1CC4AB;
+  --color-danger: #FB565A;
+  --color-warning: #F1DC1B;
+  --color-purple: #7237CB;
+  --color-blue: #2D85DE;
+  
+  --border-light: #D9D9D9;
+  
+  --text-primary: #111111;
+  --text-secondary: #777777;
   
   /* Текст */
-  --text-primary: #1a1a1a;
-  --text-secondary: #666666;
   --text-on-accent: #ffffff;
   
   /* Фон и границы */
   --bg-card: #ffffff;
   --bg-subtle: #f0f0f0;
-  --border-light: #e0e0e0;
   
   /* Тени */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
@@ -23,7 +29,6 @@
   --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
   
   /* Шрифты */
-  --font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
   --font-size-xs: 12px;
   --font-size-sm: 14px;
   --font-size-base: 16px;
@@ -42,14 +47,14 @@
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 16px;
+  --radius-xl: 20px;
   --radius-full: 9999px;
   
   /* Базовые настройки */
-  font-family: var(--font-family);
   font-size: var(--font-size-base);
   line-height: 1.5;
   color: var(--text-primary);
-  background-color: var(--color-bg-primary);
+  background-color: var(--bg-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

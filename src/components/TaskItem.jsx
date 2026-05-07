@@ -64,6 +64,7 @@ function TaskActions({ actions }) {
           className={`btn btn-${action.type}`}
           onClick={action.onClick}
         >
+          <img src="/src/assets/btn_icon.png" alt="" className="btn-icon" />
           {action.label}
         </button>
       ))}
@@ -72,7 +73,7 @@ function TaskActions({ actions }) {
 }
 
 /**
- * Карточка задачи с цветной фигурой-индикатором статуса
+ * Карточка задачи с новым дизайном
  */
 export function TaskItem({ task, actions }) {
   // Маппинг статусов в CSS классы
@@ -87,7 +88,26 @@ export function TaskItem({ task, actions }) {
 
   return (
     <li className={`task-item ${statusClass}`}>
-      <TaskContent task={task} />
+      {/* Reward block - левый верхний угол */}
+      <div className="task-reward-block">
+        <span className="task-reward-icon">💰</span>
+        <span className="task-reward-amount">{task.reward}</span>
+      </div>
+      
+      {/* Иконка задания - по центру */}
+      <div className="task-image">
+        <img src="/src/assets/vite.svg" alt="Task icon" />
+      </div>
+      
+      {/* Заголовок */}
+      <h3 className="task-card-title">{task.title}</h3>
+      
+      {/* Описание - только если существует */}
+      {task.description && (
+        <p className="task-card-description">{task.description}</p>
+      )}
+      
+      {/* Кнопка действия */}
       <TaskActions actions={actions} />
     </li>
   );
