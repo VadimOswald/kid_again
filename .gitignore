@@ -1,51 +1,35 @@
 ```
-# Build artifacts
-dist/
-build/
-*.o
-*.obj
-*.out
-
 # Dependencies
 node_modules/
-vendor/
 
-# Logs and temp files
-*.log
-*.tmp
+# Build artifacts
+dist/
 
 # Environment
 .env
 .env.local
-*.env.*
+.env.*
 
-# Editors
+# Logs
+*.log
+
+# Editor/IDE
 .vscode/
 .idea/
-*.swp
-*.swo
 
-# Coverage
+# Temp files
+*.tmp
+*.swp
+
+# Package lock
+package-lock.json
+
+# Coverage reports
 coverage/
 htmlcov/
 .coverage
 
-# Python specific
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-*.so
-
-# Compressed files
-*.zip
-*.gz
-*.tar
-*.tgz
-*.bz2
-*.xz
-*.7z
-*.rar
-*.zst
+# OS generated files
+.DS_Store
+Thumbs.db
 ```
