@@ -76,7 +76,7 @@ export function ParentView({
               <div className="empty-state-icon">
                 <div className="empty-state-icon-placeholder" />
               </div>
-              <p>Задач пока нет</p>
+              <p>Добавьте первое задание</p>
             </div>
           )}
         </div>
