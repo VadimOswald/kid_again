@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import BalanceDisplay from '../components/ui/BalanceDisplay';
 import BottomNav from '../components/ui/BottomNav';
-import TaskList from '../components/TaskList';
 import Section from '../components/Section';
+import ParentTaskCard from '../components/ParentTaskCard';
 
 /**
  * Экран родителя
@@ -12,7 +12,11 @@ export function ParentView({
   tasks, 
   onAddTask, 
   getActions,
+  onEditTask,
   balance = 0,
+  approveTask,
+  rejectTask,
+  deleteTask,
 }) {
   const [activeTab, setActiveTab] = useState('dashboard');
 
@@ -46,27 +50,60 @@ export function ParentView({
         <div>
           <div className="flex-between-center">
             <h2 className="app-subtitle app-subtitle-no-margin">Задачи детей</h2>
-            <button className="btn btn-primary" onClick={onAddTask}>
-              + Добавить
+            <button className="btn btn-primary add-task-btn" onClick={onAddTask}>
+              <span className="add-task-icon">+</span> Добавить
             </button>
           </div>
           
           {/* Секции с задачами */}
           {groupedTasks.pending.length > 0 && (
             <Section title="На проверке">
-              <TaskList tasks={groupedTasks.pending} getActions={getActions} />
+              <ul className="parent-task-list">
+                {groupedTasks.pending.map((task) => (
+                  <ParentTaskCard
+                    key={task.id}
+                    task={task}
+                    onApprove={approveTask}
+                    onReject={rejectTask}
+                    onEdit={onEditTask}
+                    onDelete={deleteTask}
+                  />
+                ))}
+              </ul>
             </Section>
           )}
           
           {groupedTasks.active.length > 0 && (
             <Section title="Активные задачи">
-              <TaskList tasks={groupedTasks.active} getActions={getActions} />
+              <ul className="parent-task-list">
+                {groupedTasks.active.map((task) => (
+                  <ParentTaskCard
+                    key={task.id}
+                    task={task}
+                    onApprove={approveTask}
+                    onReject={rejectTask}
+                    onEdit={onEditTask}
+                    onDelete={deleteTask}
+                  />
+                ))}
+              </ul>
             </Section>
           )}
           
           {groupedTasks.done.length > 0 && (
             <Section title="Выполнено">
-              <TaskList tasks={groupedTasks.done} getActions={getActions} />
+              <ul className="parent-task-list">
+                {groupedTasks.done.map((task) => (
+                  <ParentTaskCard
+                    key={task.id}
+                    task={task}
+                    onApprove={approveTask}
+                    onReject={rejectTask}
+                    onEdit={onEditTask}
+                    onDelete={deleteTask}
+                  />
+                ))}
+              </ul>
             </Section>
           )}
           

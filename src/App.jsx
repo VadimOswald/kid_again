@@ -9,9 +9,9 @@ import './App.css';
 function App() {
   // Initial tasks data
   const initialTasks = [
-    { id: 1, title: "Убрать в комнате", description: "", reward: 50, status: "new", comment: null },
-    { id: 2, title: "Помыть посуду", description: "", reward: 30, status: "pending", comment: null },
-    { id: 3, title: "Выгулять собаку", description: "", reward: 40, status: "approved", comment: null },
+    { id: 1, title: "Убрать в комнате", description: "", reward: 50, status: "new", comment: null, icon: "cleaning" },
+    { id: 2, title: "Помыть посуду", description: "", reward: 30, status: "pending", comment: null, icon: "dishes" },
+    { id: 3, title: "Выгулять собаку", description: "", reward: 40, status: "approved", comment: null, icon: "sport" },
   ];
   
   // Use centralized task manager hook
@@ -45,8 +45,8 @@ function App() {
   const [rejectingTask, setRejectingTask] = useState(null);
 
   // Wrapper for addTask to match modal interface
-  function handleCreateTask({ title, description, reward }) {
-    addTask(title, description, reward);
+  function handleCreateTask({ title, description, reward, icon }) {
+    addTask(title, description, reward, icon);
   }
 
   // Handler for editing task
@@ -91,6 +91,9 @@ function App() {
           onEditTask={openEditModal}
           getActions={(task) => getAvailableActions(task, 'parent', openEditModal, openRejectModal)}
           balance={balance}
+          approveTask={approveTask}
+          rejectTask={rejectTask}
+          deleteTask={deleteTask}
         />
       )}
 

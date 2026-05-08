@@ -23,12 +23,13 @@ export function useTaskManager(initialTasks = [], initialBalance = 0) {
   /**
    * Add a new task (always starts with status "new")
    */
-  const addTask = useCallback((title, description = '', reward = 0) => {
+  const addTask = useCallback((title, description = '', reward = 0, icon = 'cleaning') => {
     const newTask = {
       id: Date.now(),
       title,
       description,
       reward,
+      icon,
       status: TASK_STATUS.NEW,
       comment: null,
     };

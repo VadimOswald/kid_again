@@ -179,6 +179,10 @@
   color: var(--text-primary);
 }
 
+.role-btn:hover {
+  background: var(--border-light);
+}
+
 .role-btn.active {
   background: var(--color-accent-blue);
   color: var(--text-primary);
@@ -735,6 +739,250 @@
   width: 32px;
   height: 32px;
   object-fit: contain;
+}
+
+/* ========================================
+   Parent Task Card - Compact Moderation UI
+   ======================================== */
+
+.parent-task-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.parent-task-card {
+  background: white;
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--color-blue);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+.parent-task-card:hover {
+  box-shadow: var(--shadow-md);
+}
+
+.parent-task-card.expanded {
+  background: var(--bg-subtle);
+}
+
+/* Compact View Layout */
+.parent-task-card-compact {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+  min-height: 44px;
+}
+
+/* Left side: Icon + Title */
+.parent-task-info {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex: 1;
+  min-width: 0;
+}
+
+.parent-task-icon-wrapper {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.parent-task-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.parent-task-icon-placeholder {
+  width: 24px;
+  height: 24px;
+  background: var(--bg-subtle);
+  border-radius: 50%;
+}
+
+.parent-task-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.parent-task-title {
+  font-size: var(--font-size-base);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.parent-task-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.parent-task-reward {
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.parent-task-status-badge {
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: var(--radius-full);
+  color: white;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+
+/* Right side: Quick Actions */
+.quick-actions {
+  display: flex;
+  gap: var(--spacing-xs);
+  flex-shrink: 0;
+}
+
+.quick-action-btn {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-light);
+  background: var(--bg-card);
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.quick-action-btn:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.quick-action-btn.approve-btn {
+  color: var(--color-success);
+  border-color: var(--color-success);
+}
+
+.quick-action-btn.approve-btn:hover:not(:disabled) {
+  background: var(--color-success);
+  color: white;
+}
+
+.quick-action-btn.reject-btn {
+  color: var(--color-danger);
+  border-color: var(--color-danger);
+}
+
+.quick-action-btn.reject-btn:hover:not(:disabled) {
+  background: var(--color-danger);
+  color: white;
+}
+
+.quick-action-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* Expanded View */
+.parent-task-card-expanded {
+  margin-top: var(--spacing-md);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.parent-task-description {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.parent-task-rejection-note {
+  background: rgba(251, 86, 90, 0.1);
+  border-left: 3px solid var(--color-danger);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-sm);
+}
+
+.parent-task-rejection-note strong {
+  display: block;
+  font-size: var(--font-size-xs);
+  color: var(--color-danger);
+  margin-bottom: 4px;
+}
+
+.parent-task-rejection-note p {
+  font-size: var(--font-size-sm);
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.parent-task-actions-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.full-width {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Add Task Button - Primary CTA */
+.add-task-btn {
+  background: var(--color-purple);
+  color: white;
+  font-weight: 600;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.add-task-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.add-task-icon {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Approved tasks - faded appearance */
+.task-item--approved,
+.parent-task-card[style*="var(--color-success)"] {
+  opacity: 0.6;
+}
+
+.task-item--approved .task-image img {
+  filter: grayscale(50%);
 }
 
 /* Адаптивность */
