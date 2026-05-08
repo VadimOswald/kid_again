@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { TASK_ICONS } from '../utils/taskIcons';
-import { getStatusConfig, canEdit, canDelete, canApprove, canReject } from '../utils/taskStateMachine';
+import { TASK_ICONS } from '../../shared/utils/taskIcons';
+import { getStatusConfig, canEdit, canDelete, canApprove, canReject } from '../../shared/utils/taskStateMachine';
 
 /**
  * Compact Parent Task Card with expand/collapse functionality
