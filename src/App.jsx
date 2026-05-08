@@ -1,10 +1,58 @@
-import { useState } from "react";
-import ParentView from "./pages/ParentView";
-import ChildView from "./pages/ChildView";
-import CreateTaskModal from "./components/CreateTaskModal";
-import RejectTaskModal from "./components/RejectTaskModal";
-import { useTaskManager } from "./hooks/useTaskManager";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import CreateTaskModal from './shared/modals/CreateTaskModal';
+import RejectTaskModal from './shared/modals/RejectTaskModal';
+import { useTaskManager } from './shared/hooks/useTaskManager';
+import ParentView from './parent/pages/ParentView';
+import ChildView from './child/pages/ChildView';
 import './App.css';
+
+// Temporary dev-only role switcher component
+function DevRoleSwitcher({ role, setRole }) {
+  return (
+    <div className="role-switcher">
+      <button 
+        className={`role-btn ${role === 'parent' ? 'active' : ''}`}
+        onClick={() => setRole("parent")}
+      >
+        👨 Родитель
+      </button>
+      <button 
+        className={`role-btn ${role === 'child' ? 'active' : ''}`}
+        onClick={() => setRole("child")}
+      >
+        👦 Ребёнок
+      </button>
+    </div>
+  );
+}
+
+// Parent Layout wrapper
+function ParentLayout({ tasks, balance, onAddTask, onEditTask, approveTask, rejectTask, deleteTask, getAvailableActions }) {
+  return (
+    <ParentView
+      tasks={tasks}
+      onAddTask={onAddTask}
+      onEditTask={onEditTask}
+      getActions={getAvailableActions}
+      balance={balance}
+      approveTask={approveTask}
+      rejectTask={rejectTask}
+      deleteTask={deleteTask}
+    />
+  );
+}
+
+// Child Layout wrapper
+function ChildLayout({ tasks, balance, getAvailableActions }) {
+  return (
+    <ChildView
+      tasks={tasks}
+      getActions={getAvailableActions}
+      balance={balance}
+    />
+  );
+}
 
 function App() {
   // Initial tasks data
@@ -35,7 +83,8 @@ function App() {
   } = useTaskManager(initialTasks, 120);
   
   // Role for switching (temporary, until auth is implemented)
-  const [role, setRole] = useState("child");
+  // In production, this will come from backend auth
+  const [role, setRole] = useState("parent");
   
   // Modal state for creating/editing tasks
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -67,43 +116,130 @@ function App() {
   }
 
   return (
-    <>
-      {/* Переключатель ролей - только для разработки! */}
-      <div className="role-switcher">
-        <button 
-          className={`role-btn ${role === 'parent' ? 'active' : ''}`}
-          onClick={() => setRole("parent")}
-        >
-          👨 Родитель
-        </button>
-        <button 
-          className={`role-btn ${role === 'child' ? 'active' : ''}`}
-          onClick={() => setRole("child")}
-        >
-          👦 Ребёнок
-        </button>
-      </div>
+    <BrowserRouter>
+      {/* Dev-only role switcher - will be removed in production */}
+      <DevRoleSwitcher role={role} setRole={setRole} />
 
-      {role === "parent" && (
-        <ParentView
-          tasks={tasks}
-          onAddTask={() => setIsModalOpen(true)}
-          onEditTask={openEditModal}
-          getActions={(task) => getAvailableActions(task, 'parent', openEditModal, openRejectModal)}
-          balance={balance}
-          approveTask={approveTask}
-          rejectTask={rejectTask}
-          deleteTask={deleteTask}
+      <Routes>
+        {/* Parent Routes */}
+        <Route 
+          path="/parent/tasks" 
+          element={
+            role === 'parent' ? (
+              <ParentLayout
+                tasks={tasks}
+                onAddTask={() => setIsModalOpen(true)}
+                onEditTask={openEditModal}
+                approveTask={approveTask}
+                rejectTask={rejectTask}
+                deleteTask={deleteTask}
+                getAvailableActions={(task) => getAvailableActions(task, 'parent', openEditModal, openRejectModal)}
+                balance={balance}
+              />
+            ) : (
+              <Navigate to="/child/tasks" replace />
+            )
+          } 
         />
-      )}
+        <Route 
+          path="/parent/family" 
+          element={
+            role === 'parent' ? (
+              <ParentLayout
+                tasks={tasks}
+                onAddTask={() => setIsModalOpen(true)}
+                onEditTask={openEditModal}
+                approveTask={approveTask}
+                rejectTask={rejectTask}
+                deleteTask={deleteTask}
+                getAvailableActions={(task) => getAvailableActions(task, 'parent', openEditModal, openRejectModal)}
+                balance={balance}
+              />
+            ) : (
+              <Navigate to="/child/tasks" replace />
+            )
+          } 
+        />
+        <Route 
+          path="/parent/rewards" 
+          element={
+            role === 'parent' ? (
+              <ParentLayout
+                tasks={tasks}
+                onAddTask={() => setIsModalOpen(true)}
+                onEditTask={openEditModal}
+                approveTask={approveTask}
+                rejectTask={rejectTask}
+                deleteTask={deleteTask}
+                getAvailableActions={(task) => getAvailableActions(task, 'parent', openEditModal, openRejectModal)}
+                balance={balance}
+              />
+            ) : (
+              <Navigate to="/child/tasks" replace />
+            )
+          } 
+        />
 
-      {role === "child" && (
-        <ChildView
-          tasks={tasks}
-          getActions={(task) => getAvailableActions(task, 'child')}
-          balance={balance}
+        {/* Child Routes */}
+        <Route 
+          path="/child/tasks" 
+          element={
+            role === 'child' ? (
+              <ChildLayout
+                tasks={tasks}
+                getActions={(task) => getAvailableActions(task, 'child')}
+                balance={balance}
+              />
+            ) : (
+              <Navigate to="/parent/tasks" replace />
+            )
+          } 
         />
-      )}
+        <Route 
+          path="/child/shop" 
+          element={
+            role === 'child' ? (
+              <ChildLayout
+                tasks={tasks}
+                getActions={(task) => getAvailableActions(task, 'child')}
+                balance={balance}
+              />
+            ) : (
+              <Navigate to="/parent/tasks" replace />
+            )
+          } 
+        />
+        <Route 
+          path="/child/balance" 
+          element={
+            role === 'child' ? (
+              <ChildLayout
+                tasks={tasks}
+                getActions={(task) => getAvailableActions(task, 'child')}
+                balance={balance}
+              />
+            ) : (
+              <Navigate to="/parent/tasks" replace />
+            )
+          } 
+        />
+
+        {/* Default redirect */}
+        <Route 
+          path="/" 
+          element={
+            <Navigate to={role === 'parent' ? "/parent/tasks" : "/child/tasks"} replace /> 
+          } 
+        />
+        
+        {/* Catch-all redirect */}
+        <Route 
+          path="*" 
+          element={
+            <Navigate to={role === 'parent' ? "/parent/tasks" : "/child/tasks"} replace /> 
+          } 
+        />
+      </Routes>
 
       {/* Модальное окно создания/редактирования задачи */}
       <CreateTaskModal
@@ -129,7 +265,7 @@ function App() {
           setRejectingTask(null);
         }}
       />
-    </>
+    </BrowserRouter>
   );
 }
 
