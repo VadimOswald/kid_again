@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { TASK_ICONS, AVAILABLE_ICONS } from '../utils/taskIcons';
 
 /**
  * Модальное окно создания/редактирования задачи
@@ -16,6 +17,7 @@ export function CreateTaskModal({
   const [title, setTitle] = useState('');
   const [reward, setReward] = useState('');
   const [description, setDescription] = useState('');
+  const [selectedIcon, setSelectedIcon] = useState('cleaning');
   const [error, setError] = useState('');
   
   const titleInputRef = useRef(null);
@@ -29,10 +31,12 @@ export function CreateTaskModal({
       setTitle(initialData.title || '');
       setReward(String(initialData.reward || ''));
       setDescription(initialData.description || '');
+      setSelectedIcon(initialData.icon || 'cleaning');
     } else if (isOpen && mode === "create") {
       setTitle('');
       setReward('');
       setDescription('');
+      setSelectedIcon('cleaning');
     }
   }, [isOpen, mode, initialData]);
 
@@ -97,12 +101,14 @@ export function CreateTaskModal({
         title: trimmedTitle,
         description: description.trim(),
         reward: rewardValue,
+        icon: selectedIcon,
       });
     } else if (mode === "edit" && taskId !== null) {
       onSave(taskId, {
         title: trimmedTitle,
         description: description.trim(),
         reward: rewardValue,
+        icon: selectedIcon,
       });
     }
 
@@ -182,6 +188,26 @@ export function CreateTaskModal({
             rows={3}
             className="form-textarea"
           />
+        </div>
+
+        {/* Выбор иконки задачи */}
+        <div className="form-group">
+          <label>Выберите иконку</label>
+          <div className="icon-selection-grid">
+            {AVAILABLE_ICONS.map((iconKey) => {
+              const IconComponent = TASK_ICONS[iconKey];
+              return (
+                <button
+                  key={iconKey}
+                  type="button"
+                  className={`icon-select-btn ${selectedIcon === iconKey ? 'active' : ''}`}
+                  onClick={() => setSelectedIcon(iconKey)}
+                >
+                  <img src={IconComponent} alt={iconKey} />
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Ошибка валидации */}

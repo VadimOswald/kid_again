@@ -59,7 +59,7 @@ export function ChildView({
               <div className="empty-state-icon">
                 <div className="empty-state-icon-placeholder" />
               </div>
-              <p>Задач пока нет</p>
+              <p>🎉 Сегодня задач нет</p>
             </div>
           )}
         </div>

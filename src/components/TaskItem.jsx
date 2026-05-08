@@ -1,3 +1,4 @@
+import { TASK_ICONS } from '../utils/taskIcons';
 import { getStatusConfig } from '../utils/taskStateMachine';
 
 /**
@@ -85,6 +86,9 @@ export function TaskItem({ task, actions }) {
   };
 
   const statusClass = statusClassMap[task.status] || '';
+  
+  // Получаем иконку задачи из системы иконок
+  const TaskIcon = task.icon ? TASK_ICONS[task.icon] : null;
 
   return (
     <li className={`task-item ${statusClass}`}>
@@ -96,7 +100,11 @@ export function TaskItem({ task, actions }) {
       
       {/* Иконка задания - по центру */}
       <div className="task-image">
-        <img src="/src/assets/vite.svg" alt="Task icon" />
+        {TaskIcon ? (
+          <img src={TaskIcon} alt="Task icon" />
+        ) : (
+          <img src="/src/assets/vite.svg" alt="Task icon" />
+        )}
       </div>
       
       {/* Заголовок */}

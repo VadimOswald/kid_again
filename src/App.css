@@ -68,11 +68,16 @@
   height: 30px;
   background: white;
   border: 1px solid var(--border-light);
-  border-radius: 8px;
+  border-radius: 999px;
   position: relative;
   font-size: 10px;
   font-weight: 500;
   overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  color: #111111;
 }
 
 /* Нижнее внутреннее подчеркивание кнопки */
@@ -88,9 +93,9 @@
 
 /* Иконка в кнопке */
 .btn-icon {
-  width: 12px;
-  height: 12px;
-  margin-right: 6px;
+  width: 20px;
+  height: 20px;
+  margin-right: 0;
   object-fit: contain;
 }
 
@@ -171,11 +176,14 @@
   cursor: pointer;
   font-weight: 500;
   transition: all 0.2s;
+  color: var(--text-primary);
 }
 
 .role-btn.active {
   background: var(--color-accent-blue);
-  color: white;
+  color: var(--text-primary);
+  box-shadow: 0 2px 8px rgba(45, 133, 222, 0.3);
+  border-color: var(--color-accent-blue);
 }
 
 /* Bottom Navigation */
@@ -340,9 +348,24 @@
 }
 
 .task-item--approved {
-  opacity: 0.7;
+  opacity: 0.5;
   border-left: 4px solid var(--color-success);
   background: linear-gradient(to right, rgba(28, 196, 171, 0.05), white);
+}
+
+/* Long text safety */
+.task-card-title,
+.task-card-description,
+.task-title {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.task-card-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .task-header {
@@ -676,6 +699,44 @@
   min-width: 100px;
 }
 
+/* Icon selection grid for CreateTaskModal */
+.icon-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-xs);
+}
+
+.icon-select-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md);
+  border: 2px solid var(--border-light);
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  cursor: pointer;
+  transition: all 0.2s;
+  aspect-ratio: 1;
+}
+
+.icon-select-btn:hover {
+  border-color: var(--color-accent-blue);
+  background: var(--bg-subtle);
+}
+
+.icon-select-btn.active {
+  border-color: var(--color-accent-blue);
+  background: rgba(45, 133, 222, 0.1);
+  box-shadow: 0 0 0 2px var(--color-accent-blue);
+}
+
+.icon-select-btn img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
 /* Адаптивность */
 @media (max-width: 480px) {
   .app-container {
@@ -685,5 +746,9 @@
   
   .app-title {
     font-size: var(--font-size-xl);
+  }
+  
+  .icon-selection-grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
