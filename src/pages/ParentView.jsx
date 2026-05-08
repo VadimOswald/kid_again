@@ -48,12 +48,11 @@ export function ParentView({
 
       {activeTab === 'tasks' && (
         <div>
-          <div className="flex-between-center">
-            <h2 className="app-subtitle app-subtitle-no-margin">Задачи детей</h2>
-            <button className="btn btn-primary add-task-btn" onClick={onAddTask}>
-              <span className="add-task-icon">+</span> Добавить
-            </button>
-          </div>
+          <h2 className="app-subtitle app-subtitle-no-margin">Задачи детей</h2>
+          <button className="add-task-btn-composite" onClick={onAddTask}>
+            <span className="add-task-circle">+</span>
+            <span className="add-task-text">Создать задание</span>
+          </button>
           
           {/* Секции с задачами */}
           {groupedTasks.pending.length > 0 && (

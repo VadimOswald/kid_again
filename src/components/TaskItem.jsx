@@ -1,4 +1,5 @@
 import { TASK_ICONS } from '../utils/taskIcons';
+import rocketIcon from '../assets/reward/rocket.png';
 import { getStatusConfig } from '../utils/taskStateMachine';
 
 /**
@@ -92,9 +93,9 @@ export function TaskItem({ task, actions }) {
 
   return (
     <li className={`task-item ${statusClass}`}>
-      {/* Reward block - левый верхний угол */}
+      {/* Reward block - левый верхний угол с ракетой */}
       <div className="task-reward-block">
-        <span className="task-reward-icon">💰</span>
+        <img src={rocketIcon} alt="" className="task-reward-icon" />
         <span className="task-reward-amount">{task.reward}</span>
       </div>
       

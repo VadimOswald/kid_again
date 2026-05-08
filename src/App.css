@@ -298,7 +298,9 @@
 }
 
 .task-reward-icon {
-  font-size: 14px;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
 }
 
 .task-reward-amount {
@@ -333,11 +335,12 @@
 
 /* Описание карточки */
 .task-card-description {
-  font-size: 8px;
+  font-size: 14px;
   line-height: 1.4;
   color: var(--text-secondary);
   text-align: center;
   margin: 0;
+  opacity: 0.8;
 }
 
 /* Состояния карточек по статусам */
@@ -906,7 +909,7 @@
   cursor: not-allowed;
 }
 
-/* Expanded View */
+/* Expanded View - Smooth Animation */
 .parent-task-card-expanded {
   margin-top: var(--spacing-md);
   padding-top: var(--spacing-md);
@@ -914,13 +917,35 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
+  overflow: hidden;
+  max-height: 500px;
+  opacity: 1;
+  transition:
+    max-height 0.25s ease-out,
+    opacity 0.2s ease-out,
+    padding 0.2s ease-out;
+}
+
+.parent-task-card .parent-task-card-expanded {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  margin-top: 0;
+}
+
+.parent-task-card.expanded .parent-task-card-expanded {
+  max-height: 500px;
+  opacity: 1;
+  padding-top: var(--spacing-md);
+  margin-top: var(--spacing-md);
 }
 
 .parent-task-description {
-  font-size: var(--font-size-sm);
+  font-size: 14px;
   color: var(--text-secondary);
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.4;
+  opacity: 0.8;
 }
 
 .parent-task-rejection-note {
@@ -954,7 +979,44 @@
   justify-content: center;
 }
 
-/* Add Task Button - Primary CTA */
+/* Add Task Button - Composite Button with Green Circle */
+.add-task-btn-composite {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: var(--spacing-sm) var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.add-task-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  background: var(--color-accent-green);
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.add-task-btn-composite:hover .add-task-circle {
+  transform: scale(1.05);
+}
+
+.add-task-text {
+  font-size: var(--font-size-base);
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Old Add Task Button - Primary CTA (deprecated) */
 .add-task-btn {
   background: var(--color-purple);
   color: white;

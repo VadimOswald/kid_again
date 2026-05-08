@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { TASK_ICONS } from '../utils/taskIcons';
-import { getStatusConfig } from '../utils/taskStateMachine';
+import { getStatusConfig, canEdit, canDelete, canApprove, canReject } from '../utils/taskStateMachine';
 
 /**
  * Compact Parent Task Card with expand/collapse functionality
@@ -9,7 +9,7 @@ export function ParentTaskCard({ task, onApprove, onReject, onEdit, onDelete }) 
   const [isExpanded, setIsExpanded] = useState(false);
   const statusConfig = getStatusConfig(task.status);
   const TaskIcon = task.icon ? TASK_ICONS[task.icon] : null;
-
+  
   const handleCardClick = (e) => {
     // Don't expand if clicking on action buttons
     if (e.target.closest('.quick-actions')) {
@@ -33,6 +33,12 @@ export function ParentTaskCard({ task, onApprove, onReject, onEdit, onDelete }) 
   };
 
   const statusAccent = getStatusAccent();
+
+  // Action availability based on status
+  const isEditable = canEdit(task);
+  const isDeletable = canDelete(task);
+  const isApprovable = canApprove(task);
+  const isRejectable = canReject(task);
 
   return (
     <li 
@@ -62,81 +68,150 @@ export function ParentTaskCard({ task, onApprove, onReject, onEdit, onDelete }) 
           </div>
         </div>
 
-        {/* Right: Quick Actions (Approve/Reject) */}
+        {/* Right: Quick Actions based on status */}
         <div className="quick-actions">
-          <button
-            className="quick-action-btn approve-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              onApprove(task.id);
-            }}
-            title="Подтвердить"
-            disabled={task.status !== 'pending' && task.status !== 'rejected'}
-          >
-            ✓
-          </button>
-          <button
-            className="quick-action-btn reject-btn"
-            onClick={(e) => {
-              e.stopPropagation();
-              onReject(task);
-            }}
-            title="На доработку"
-            disabled={task.status !== 'pending'}
-          >
-            ✕
-          </button>
+          {/* STATUS: new - show edit and delete icons */}
+          {task.status === 'new' && (
+            <>
+              <button
+                className="quick-action-btn edit-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onEdit(task);
+                }}
+                title="Редактировать"
+              >
+                ✏️
+              </button>
+              <button
+                className="quick-action-btn delete-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onDelete(task.id);
+                }}
+                title="Удалить"
+              >
+                🗑️
+              </button>
+            </>
+          )}
+          
+          {/* STATUS: pending - show approve and reject */}
+          {task.status === 'pending' && (
+            <>
+              <button
+                className="quick-action-btn approve-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onApprove(task.id);
+                }}
+                title="Подтвердить"
+              >
+                ✓
+              </button>
+              <button
+                className="quick-action-btn reject-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onReject(task);
+                }}
+                title="На доработку"
+              >
+                ✕
+              </button>
+            </>
+          )}
+          
+          {/* STATUS: rejected - show approve only */}
+          {task.status === 'rejected' && (
+            <button
+              className="quick-action-btn approve-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                onApprove(task.id);
+              }}
+              title="Подтвердить"
+            >
+              ✓
+            </button>
+          )}
+          
+          {/* STATUS: approved - no actions */}
+          {task.status === 'approved' && (
+            <span className="parent-task-status-badge" style={{ background: statusConfig.color }}>
+              Выполнено
+            </span>
+          )}
         </div>
       </div>
 
       {/* Expanded View - Details */}
-      {isExpanded && (
-        <div className="parent-task-card-expanded">
-          {task.description && (
-            <p className="parent-task-description">{task.description}</p>
-          )}
-          
-          {task.comment && task.status === 'rejected' && (
-            <div className="parent-task-rejection-note">
-              <strong>Причина доработки:</strong>
-              <p>{task.comment}</p>
-            </div>
-          )}
+      <div className="parent-task-card-expanded">
+        {task.description && (
+          <p className="parent-task-description">{task.description}</p>
+        )}
+        
+        {task.comment && task.status === 'rejected' && (
+          <div className="parent-task-rejection-note">
+            <strong>Причина доработки:</strong>
+            <p>{task.comment}</p>
+          </div>
+        )}
 
-          <div className="parent-task-actions-vertical">
+        <div className="parent-task-actions-vertical">
+          {/* Edit button - only for 'new' status */}
+          {isEditable && (
             <button
               className="btn btn-secondary full-width"
               onClick={(e) => {
                 e.stopPropagation();
                 onEdit(task);
               }}
-              disabled={!task.status || task.status === 'pending' || task.status === 'approved'}
             >
               Редактировать
             </button>
+          )}
+          
+          {/* Delete button - only for 'new' status */}
+          {isDeletable && (
             <button
               className="btn btn-secondary full-width"
               onClick={(e) => {
                 e.stopPropagation();
                 onDelete(task.id);
               }}
-              disabled={!task.status || task.status === 'pending' || task.status === 'approved'}
             >
               Удалить
             </button>
+          )}
+          
+          {/* Reject button - only for 'pending' status */}
+          {isRejectable && (
             <button
               className="btn btn-secondary full-width"
               onClick={(e) => {
                 e.stopPropagation();
                 onReject(task);
               }}
-              disabled={task.status !== 'pending'}
             >
               Отправить на доработку
             </button>
-          </div>
+          )}
+          
+          {/* Approve button - for 'pending' and 'rejected' status */}
+          {isApprovable && (
+            <button
+              className="btn btn-primary full-width"
+              onClick={(e) => {
+                e.stopPropagation();
+                onApprove(task.id);
+              }}
+            >
+              Подтвердить выполнение
+            </button>
+          )}
         </div>
-      )}
+      </div>
     </li>
   );
 }
