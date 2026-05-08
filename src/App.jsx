@@ -44,11 +44,11 @@ function ParentLayout({ tasks, balance, onAddTask, onEditTask, approveTask, reje
 }
 
 // Child Layout wrapper
-function ChildLayout({ tasks, balance, getAvailableActions }) {
+function ChildLayout({ tasks, balance, getActions }) {
   return (
     <ChildView
       tasks={tasks}
-      getActions={getAvailableActions}
+      getActions={getActions}
       balance={balance}
     />
   );
