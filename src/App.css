@@ -100,13 +100,15 @@
 }
 
 .btn-primary {
-  background: var(--color-accent-green);
-  color: var(--text-on-accent);
+  background: var(--color-success) !important;
+  color: var(--text-on-accent) !important;
+  cursor: pointer;
 }
 
 .btn-primary:hover {
   opacity: 0.9;
   transform: translateY(-1px);
+  cursor: pointer;
 }
 
 .btn-secondary {
